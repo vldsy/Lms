@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAllUsers(): LengthAwarePaginator
+    {
+        return $this->orderBy('id')->paginate(15);
+    }
+
+    public function searchUsers(string $searchString = null): LengthAwarePaginator
+    {
+        return $searchString == null
+            ? $this->getAllUsers()
+            : $this->where(function ($q) use ($searchString) {
+                $q->orWhere('id', $searchString)
+                    ->orWhere('name', 'like', '%' . $searchString . '%')
+                    ->orWhere('email', 'like', '%' . $searchString . '%');
+            })->paginate(15);
     }
 }

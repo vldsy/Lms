@@ -24,6 +24,8 @@ class ImageController extends Controller
 
         $request->image->move(public_path('images'), $imageName);
 
+        // stores image to \public\images\
+
         /*
             Write Code Here for
             Store $imageName name in DATABASE from HERE

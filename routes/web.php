@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,10 @@ require __DIR__.'/auth.php';
 
 Route::get('/image-upload', [ImageController::class, 'index'])->name('image.index');
 Route::post('/image-upload', [ImageController::class, 'store'])->name('image.store');
+
+// admin section
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('users', [AdminController::class, 'showAllUsers'])->name('admin.users');
+    Route::get('courses', [AdminController::class, 'showAllCourses'])->name('admin.courses');
+    Route::get('tasks', [AdminController::class, 'showAllTasks'])->name('admin.tasks');
+});
