@@ -10,4 +10,10 @@ edit submissionsent.blade.php
 3. 
 
 
+NB
+
+in original variant check for auth user -- not for user_id inside submission
+auth user should be in student's table
+
+
 
