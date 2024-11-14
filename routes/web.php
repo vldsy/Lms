@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('users', [AdminController::class, 'showAllUsers'])->name('admin.users');
     Route::get('courses', [AdminController::class, 'showAllCourses'])->name('admin.courses');
     Route::get('tasks', [AdminController::class, 'showAllTasks'])->name('admin.tasks');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('send-email');
 });
